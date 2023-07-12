@@ -16,11 +16,6 @@ void addPageTable(const u32 *table, u32 addr, u16 flags) {
         return;
     } // todo error handling
     pageDirectory[index] = ((u32) table & 0xfffff000) + (flags | PAGE_DIRECTORY_FLAG_PRESENT);
-    serialPrintf("%x\n", table);
-    serialPrintf("%x\n", pageDirectory);
-    for(int i = 0; i < 1024; i++) {
-        serialPrintf("%x ", pageDirectory[i]);
-    }
     flushPage();
 }
 

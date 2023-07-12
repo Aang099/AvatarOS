@@ -21,9 +21,9 @@ extern void loadTss();
 
 extern struct tss_entry kernelTss;
 
-void setupGdt() {
+void setupGdt(void) {
     setupTss();
-    gdtSet(&gdtEntries[5], (u32) ((&kernelTss) - (0xc0000000 / sizeof(struct tss_entry *))), sizeof(struct tss_entry),
+    gdtSet(&gdtEntries[5], ((u32)&kernelTss) - 0xC0000000, sizeof(struct tss_entry),
            0x89, 0xC);
     gdtPtr.size = sizeof(struct gdt_entry) * 6;
     gdtPtr.offset = (u32) &gdtEntries[0];

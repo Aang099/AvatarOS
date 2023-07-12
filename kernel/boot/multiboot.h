@@ -215,7 +215,6 @@ struct multiboot_info
         };
     };
 };
-typedef struct multiboot_info multiboot_info_t;
 
 struct multiboot_color
 {
@@ -235,7 +234,7 @@ struct multiboot_mmap_entry
 #define MULTIBOOT_MEMORY_NVS                    4
 #define MULTIBOOT_MEMORY_BADRAM                 5
     u32 type;
-} __attribute__((packed));
+} __attribute((packed));
 typedef struct multiboot_mmap_entry multiboot_memory_map_t;
 
 struct multiboot_mod_list

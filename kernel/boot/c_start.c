@@ -1,9 +1,8 @@
 #include "multiboot.h"
 #include "../screen/font.h"
-#include "../io/serial.h"
 #include "../x86/arch.h"
 
-_Noreturn void hang() {
+__attribute((noreturn)) void hang(void) {
     for(;;) {
         __asm __volatile("cli");
         __asm __volatile("hlt");
@@ -19,6 +18,5 @@ void c_init(u32 magic) {
     vbeSetup(1080, 720);
     fontStr(uitoa(magic, 16), 8, 0, 0, 0xffffffff);
     hang();
-
 }
 

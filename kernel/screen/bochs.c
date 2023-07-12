@@ -14,7 +14,7 @@ u16 vbeRead(u16 index) {
     return inw(VBE_DISPI_IOPORT_DATA);
 }
 
-void vbeDisable() {
+void vbeDisable(void) {
     vbeWrite(VBE_DISPI_INDEX_ENABLE, VBE_DISPI_DISABLED);
 }
 
@@ -47,7 +47,9 @@ void vbeSetup(u16 width, u16 height) {
         for (int i = 0; i < screenPageCount; i++) {
             screenPageTable[i] = bufferPageAddr + i * 4096 + PAGE_TABLE_FLAG_PRESENT + PAGE_TABLE_FLAG_WRITABLE;
         }
-        addPageTable(screenPageTable, 0xD0000000, PAGE_DIRECTORY_FLAG_WRITABLE);
+        if(!addPageTable(screenPageTable, 0xD0000000, PAGE_DIRECTORY_FLAG_WRITABLE)) {
+            //todo implement panic
+        }
         screenBuffer = (u32 *) 0xD0000000;
     } else return; //todo account for screen sizes larger than 4mb / one page table
 }

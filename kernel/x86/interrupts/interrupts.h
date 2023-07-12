@@ -1,8 +1,27 @@
 #pragma once
 #include "../../util/kstd.h"
-#include "../arch.h"
 
-struct IDTEntry {
+#define PIC1 0x20
+#define PIC1_OFFSET 0x20
+#define PIC1_DATA (PIC1 + 1)
+
+#define PIC2 0xA0
+#define PIC2_OFFSET 0x28
+#define PIC2_DATA (PIC2 + 1)
+
+#define PIC_EOI 0x20
+#define PIC_MODE_8086 0x01
+#define ICW1_ICW4 0x01
+#define ICW1_INIT 0x10
+
+#define PIC_WAIT() do {         \
+        asm ("jmp 1f\n\t"       \
+                "1:\n\t"        \
+                "    jmp 2f\n\t"\
+                "2:");          \
+    } while (0)
+
+struct idt_entry {
     u16 offset_low;
     u16 selector;
     u8 ignored __attribute((unused));
@@ -10,10 +29,21 @@ struct IDTEntry {
     u16 offset_high;
 } __attribute((packed));
 
-struct IDTPointer {
+struct idt_ptr {
     u16 limit;
     u32* base;
 } __attribute((packed));
 
-void setupIdt();
-void idtSet(u8 index, void (*base)(struct registers *), u16 selector, u8 flags) ;
+struct registers {
+    u32 edi, esi, ebp, esp, ebx, edx, ecx, eax;
+    u32 gs, fs, es, ds;
+    u32 int_no, err_no;
+    u32 eip, cs, eflags, useresp, ss;
+} __attribute((packed));
+
+void setupIdt(void);
+void setupIsrs(void);
+void setupIrqs(void);
+void idtSet(u8 index, void (*base)(struct registers *), u16 selector, u8 flags);
+void installIsr(size_t i, void (*handler)(struct registers*));
+void installIrq(size_t i, void (*handler)(struct registers *));

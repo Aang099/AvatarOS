@@ -2,21 +2,14 @@
 #include "page.h"
 #include "interrupts/interrupts.h"
 
-struct gdt_ptr {
-    u16 size;
-    u32 offset;
-} __attribute((packed));
-
 struct gdt_entry {
     u32 low;
     u32 high;
 } __attribute((packed, aligned(8)));
 
-struct registers {
-    u32 edi, esi, ebp, esp, ebx, edx, ecx, eax;
-    u32 gs, fs, es, ds;
-    u32 int_no, err_no;
-    u32 eip, cs, eflags, useresp, ss;
+struct gdt_ptr {
+    u16 size;
+    u32 offset;
 } __attribute((packed));
 
 struct tss_entry
@@ -50,5 +43,5 @@ struct tss_entry
     u16 iomap_base;
 } __attribute((packed));
 
-void setupGdt();
-void setupTss();
+void setupGdt(void);
+void setupTss(void);

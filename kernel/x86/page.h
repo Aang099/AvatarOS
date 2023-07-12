@@ -20,4 +20,4 @@
 #define PAGE_TABLE_FLAG_DIRTY    (1 << 6)
 #define PAGE_TABLE_FLAG_GLOBAL   (1 << 8)
 
-void addPageTable(const u32 *table, u32 addr, u16 flags);
+char addPageTable(const u32 *table, u32 addr, u16 flags);

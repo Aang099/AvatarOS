@@ -155,7 +155,7 @@ static void exception_handler(struct registers *regs) {
     //panic(exceptions[regs->int_no]); //todo panic
 }
 
-void setupIsr() {
+void setupIsrs(void) {
     for (size_t i = 0; i < NUM_ISRS; i++) {
         isrs[i].index = i;
         isrs[i].stub = stubs[i];

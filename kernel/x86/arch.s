@@ -31,11 +31,3 @@ loadTss:
     mov   $0x2B, %ax
     ltr   %ax
     ret
-
-.global loadIdt
-.type loadIdt, @function
-loadIdt:
-    mov 4(%esp), %eax
-    lidt (%eax)
-    ret
-

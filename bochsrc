@@ -1,0 +1,7 @@
+ata0-master:  type=cdrom, path=mykernel.iso, status=inserted
+boot: cdrom
+cpu: count=2, ips=10000000
+memory: guest=4096, host=2048
+
+pci: enabled=1, chipset=i440fx, slot1=pcivga
+com1: enabled=1, mode=file, dev=serial.out

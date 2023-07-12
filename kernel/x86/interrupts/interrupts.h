@@ -1,6 +1,6 @@
 #pragma once
-#include "../klib/kstd.h"
-#include "arch.h"
+#include "../../util/kstd.h"
+#include "../arch.h"
 
 struct IDTEntry {
     u16 offset_low;

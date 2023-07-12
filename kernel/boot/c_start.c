@@ -11,7 +11,7 @@ _Noreturn void hang() {
 }
 
 void c_init(u32 magic) {
-    if(magic != 0x2BADB002) hang();
+    if(magic != MULTIBOOT_BOOTLOADER_MAGIC) hang();
     //multiboot_info_t *mb_info = (multiboot_info_t*) 0xC03FF000;
     serialInit();
     setupGdt();

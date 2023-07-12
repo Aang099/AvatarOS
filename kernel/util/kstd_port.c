@@ -13,7 +13,6 @@ void outl(u32 port, u32 value) {
     __asm __volatile("outl %%eax,%%dx"::"d" (port), "a" (value));
 }
 
-
 u8 inb(u32 port) {
     u8 ret;
     __asm __volatile("inb %%dx,%%al":"=a" (ret):"d"(port));

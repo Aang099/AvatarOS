@@ -19,7 +19,7 @@ CFLAGS=-m32 -O2 -g
 CFLAGS+=-Wall -Wextra -Wpedantic
 CFLAGS+=-nostdinc -ffreestanding -static -nostartfiles -nolibc -s
 CFLAGS+=-fno-pie -fno-stack-protector -fno-builtin-function -fno-builtin -fno-pic
-CCFLAGS=-std=c11
+CCFLAGS=-std=c11 -Ikernel
 CCFLAGS+=-Wno-pointer-arith -Wno-unused-parameter
 CXXFLAGS=-fno-exceptions -fno-rtti -nostdlib++
 ASFLAGS=-O2
@@ -30,10 +30,10 @@ ifeq ($(UNAME),Linux)
 CCFLAGS+=-elf_i386
 endif
 
-KERNEL_C_kernelS=$(wildcard kernel/**/*.c)
-KERNEL_CXX_kernelS=$(wildcard kernel/**/*.cpp)
-KERNEL_S_kernelS=$(wildcard kernel/**/*.s)
-KERNEL_NASM_kernelS=$(wildcard kernel/**/*.asm)
+KERNEL_C_kernelS=$(wildcard kernel/*.c  kernel/**/*.c kernel/**/**/*.c)
+KERNEL_CXX_kernelS=$(wildcard kernel/*.cpp  kernel/**/*.cpp kernel/**/**/*.cpp)
+KERNEL_S_kernelS=$(wildcard kernel/*.s  kernel/**/*.s kernel/**/**/*.s)
+KERNEL_NASM_kernelS=$(wildcard kernel/*.asm  kernel/**/*.asm kernel/**/**/*.asm)
 KERNEL_OBJS=$(KERNEL_C_kernelS:.c=.o) $(KERNEL_CXX_kernelS:.cpp=.o) $(KERNEL_S_kernelS:.s=.o) $(KERNEL_NASM_kernelS:.asm=.o)
 
 KERNEL=isodir/boot/kernel

@@ -1,6 +1,6 @@
 #pragma once
 #include "page.h"
-#include "interrupts.h"
+#include "interrupts/interrupts.h"
 
 struct gdt_ptr {
     u16 size;

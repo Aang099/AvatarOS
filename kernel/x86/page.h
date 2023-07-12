@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../klib/ktype.h"
+#include "../util/ktype.h"
 #include "../io/serial.h"
 
 #define PAGE_DIRECTORY_FLAG_PRESENT  (1 << 0)

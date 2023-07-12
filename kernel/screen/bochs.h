@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../klib/kstd.h"
+#include "../util/kstd.h"
 #include "../io/pci.h"
 #include "../x86/page.h"
 

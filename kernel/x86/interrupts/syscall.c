@@ -3,8 +3,9 @@
 #include "../../io/serial.h"
 
 void handleSyscallC(struct registers *reg) {
-    serialPuts("Syscall!\n");
-    fontStr("Syscall!", 4, 0, 16, 0xffffffff);
+    serialPrintf("%x\n", reg->eax);
+    serialPrintf("%s\n", (char*)reg->eax);
+    fontStr((char*) reg->eax, strlen((char*) reg->eax), 0, 16, 0xffffffff);
 }
 
 extern void handleSyscallAsm(void*);

@@ -37,10 +37,10 @@ struct idt_ptr {
 } __attribute((packed));
 
 struct registers {
-    u32 edi, esi, ebp, esp, ebx, edx, ecx, eax;
     u32 gs, fs, es, ds;
+    u32 edi, esi, ebp, esp, ebx, edx, ecx, eax;
     u32 int_no, err_no;
-    u32 eip, cs, eflags, useresp, ss;
+    u32 eip, cs, efl, useresp, ss;
 } __attribute((packed));
 
 void setupInterrupts(void);

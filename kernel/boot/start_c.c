@@ -26,7 +26,10 @@ void main(void *mb_info, u32 magic) {
     fontStr(uitoa(magic, 16), 8, 0, 0, 0xffffffff);
     setupSyscalls();
     fontStr("hi", 2, 0, 8, 0xffffffff);
-    __asm __volatile("int $0x80");
+    __asm __volatile("mov %0, %%eax\n\t"
+                     "int $0x80"
+                     :
+                     : "r"("test"));
     hang();
 }
 

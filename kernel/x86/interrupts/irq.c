@@ -30,19 +30,19 @@ void remapIrqs(void) {
     outb(PIC2_DATA, mask2);
 }
 
-void setIrqMask(size_t i) {
+void setIrqMask(u8 i) {
     u16 port = i < 8 ? PIC1_DATA : PIC2_DATA;
     u8 value = inb(port) | (1 << i);
     outb(port, value);
 }
 
-void clearIrqMask(size_t i) {
+void clearIrqMask(u8 i) {
     u16 port = i < 8 ? PIC1_DATA : PIC2_DATA;
     u8 value = inb(port) & ~(1 << i);
     outb(port, value);
 }
 
-void installIrq(size_t i, void (*handler)(struct registers *)) {
+void installIrq(u8 i, void (*handler)(struct registers *)) {
     __asm __volatile("cli");
     handlers[i] = handler;
     clearIrqMask(i);

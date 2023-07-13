@@ -6,7 +6,7 @@ static struct {
 
 extern void loadIdt(void* ptr);
 
-void idtSet(u8 index, void (*base)(struct registers*), u16 selector, u8 flags) {
+void idtSet(u8 index, void (*base)(), u16 selector, u8 flags) {
     idt.entries[index] = (struct idt_entry) {
             .offset_low = ((u32) base) & 0xFFFF,
             .offset_high = (((u32) base) >> 16) & 0xFFFF,
@@ -20,6 +20,7 @@ void setupInterrupts(void) {
     idt.pointer.base = (u32*) &idt.entries[0];
     memset(&idt.entries[0], 0, sizeof(idt.entries));
     loadIdt((u32*) &idt.pointer);
-    //setupIsrs();
-    //remapIrqs();
+    setupIsrs();
+    remapIrqs();
+    __asm __volatile("sti");
 }

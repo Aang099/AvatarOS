@@ -96,13 +96,17 @@ extern void _isr46(struct registers *);
 
 extern void _isr47(struct registers *);
 
-void
-(*stubs[NUM_ISRS])(struct registers *) = {_isr0, _isr1, _isr2, _isr3, _isr4, _isr5, _isr6, _isr7, _isr8, _isr9, _isr10,
-                                          _isr11, _isr12, _isr13, _isr14, _isr15, _isr16, _isr17, _isr18, _isr19,
-                                          _isr20, _isr21, _isr22, _isr23, _isr24, _isr25, _isr26, _isr27, _isr28,
-                                          _isr29, _isr30, _isr31, _isr32, _isr33, _isr34, _isr35, _isr36, _isr37,
-                                          _isr38, _isr39, _isr40, _isr41, _isr42, _isr43, _isr44, _isr45, _isr46,
-                                          _isr47,};
+void (*isrStubs[NUM_ISRS])(struct registers *) = {_isr0, _isr1, _isr2, _isr3, _isr4, _isr5, _isr6, _isr7, _isr8, _isr9,
+                                                  _isr10,
+                                                  _isr11, _isr12, _isr13, _isr14, _isr15, _isr16, _isr17, _isr18,
+                                                  _isr19,
+                                                  _isr20, _isr21, _isr22, _isr23, _isr24, _isr25, _isr26, _isr27,
+                                                  _isr28,
+                                                  _isr29, _isr30, _isr31, _isr32, _isr33, _isr34, _isr35, _isr36,
+                                                  _isr37,
+                                                  _isr38, _isr39, _isr40, _isr41, _isr42, _isr43, _isr44, _isr45,
+                                                  _isr46,
+                                                  _isr47,};
 
 const char *exceptions[32] = {"Divide by zero", "Debug", "NMI", "Breakpoint", "Overflow", "OOB", "Invalid opcode",
                               "No coprocessor", "Double fault", "Coprocessor segment overrun", "Bad TSS",
@@ -135,10 +139,8 @@ void handleIsrC(struct registers *regs) {
 }
 
 
-#include "../../io/serial.h"
-
 void setupIsrs(void) {
     for (u8 i = 0; i < NUM_ISRS; i++) {
-        idtSet(i, stubs[i], 0x08, 0x8E);
+        idtSet(i, isrStubs[i], 0x08, 0x8E);
     }
 }

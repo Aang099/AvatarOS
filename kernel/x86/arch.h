@@ -1,6 +1,5 @@
 #pragma once
 #include "page.h"
-#include "interrupts/interrupts.h"
 
 struct gdt_entry {
     u32 low;

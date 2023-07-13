@@ -1,5 +1,5 @@
 #pragma once
-#include "../../util/kstd.h"
+#include "../arch.h"
 
 #define PIC1 0x20
 #define PIC1_OFFSET 0x20
@@ -46,8 +46,8 @@ struct registers {
 void setupInterrupts(void);
 void setupIsrs(void);
 void remapIrqs(void);
-void idtSet(u8 index, void (*base)(struct registers *), u16 selector, u8 flags);
-void installIrq(size_t i, void (*handler)(struct registers *));
+void idtSet(u8 index, void (*base)(), u16 selector, u8 flags);
+void installIrq(u8 i, void (*handler)(struct registers *));
 void irqStub(struct registers *regs);
 
 extern void (*isrHandlers[])(struct registers*);

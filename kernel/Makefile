@@ -30,22 +30,18 @@ ifeq ($(UNAME),Linux)
 CCFLAGS+=-elf_i386
 endif
 
-KERNEL_C_kernelS=$(wildcard kernel/*.c  kernel/**/*.c kernel/**/**/*.c)
-KERNEL_CXX_kernelS=$(wildcard kernel/*.cpp  kernel/**/*.cpp kernel/**/**/*.cpp)
-KERNEL_S_kernelS=$(wildcard kernel/*.s  kernel/**/*.s kernel/**/**/*.s)
-KERNEL_NASM_kernelS=$(wildcard kernel/*.asm  kernel/**/*.asm kernel/**/**/*.asm)
+KERNEL_C_kernelS=$(wildcard ./*.c ./**/*.c ./**/**/*.c)
+KERNEL_CXX_kernelS=$(wildcard ./*.cpp ./**/*.cpp ./**/**/*.cpp)
+KERNEL_S_kernelS=$(wildcard ./*.s ./**/*.s ./**/**/*.s)
+KERNEL_NASM_kernelS=$(wildcard ./*.asm ./**/*.asm ./**/**/*.asm)
 KERNEL_OBJS=$(KERNEL_C_kernelS:.c=.o) $(KERNEL_CXX_kernelS:.cpp=.o) $(KERNEL_S_kernelS:.s=.o) $(KERNEL_NASM_kernelS:.asm=.o)
 
-KERNEL=isodir/boot/kernel
-
-all: clean iso
+KERNEL=../isodir/boot/kernel
 
 clean:
+	rm -f ./*.o
 	rm -f ./**/*.o
 	rm -f ./**/**/*.o
-	rm -f ./*.img
-	rm -f ./**/*.elf
-	rm -f ./**/*.bin
 
 %.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS) $(CCFLAGS)
@@ -58,11 +54,5 @@ clean:
 %.o: %.asm
 	$(NASM) -o $@ $< $(NASMFLAGS)
 
-kernel: $(KERNEL_OBJS)
+build: $(KERNEL_OBJS)
 	$(CXX) -o $(KERNEL) $^ $(CFLAGS) $(LDFLAGS)
-
-iso: kernel
-	grub-mkrescue isodir -o mykernel.iso
-
-run: all
-	bochs -q

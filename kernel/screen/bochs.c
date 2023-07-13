@@ -33,7 +33,6 @@ void vbeSetup(u16 width, u16 height) {
     vbeEnable();
     screenWidth = width;
     screenHeight = height;
-
     u8 bus = 0, dev = 0, func = 0;
     if (pciFind(BOCHS_VBE_VENDOR, BOCHS_VBE_DEVICE, &bus, &dev, &func)
         || pciFind(0x80EE, 0xBEEF, &bus, &dev, &func)) {

@@ -1,8 +1,8 @@
 #include "interrupts.h"
-static struct __attribute((packed)) {
+static struct {
     struct idt_entry entries[256];
     struct idt_ptr pointer;
-} idt;
+} __attribute((packed)) idt;
 
 extern void loadIdt(void* ptr);
 
@@ -20,6 +20,6 @@ void setupInterrupts(void) {
     idt.pointer.base = (u32*) &idt.entries[0];
     memset(&idt.entries[0], 0, sizeof(idt.entries));
     loadIdt((u32*) &idt.pointer);
-    setupIsrs();
-    remapIrqs();
+    //setupIsrs();
+    //remapIrqs();
 }

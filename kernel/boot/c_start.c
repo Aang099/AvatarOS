@@ -2,6 +2,8 @@
 #include "../screen/font.h"
 #include "../x86/arch.h"
 
+//multiboot_info_t *mb_info = (multiboot_info_t*) 0xC03FF000;
+
 __attribute((noreturn)) void hang(void) {
     for(;;) {
         __asm __volatile("cli");
@@ -9,12 +11,15 @@ __attribute((noreturn)) void hang(void) {
     }
 }
 
-void c_init(u32 magic) {
+void mapMultibootMmap() {
+
+}
+
+void main(void *mb_info, u32 magic) {
     if(magic != MULTIBOOT_BOOTLOADER_MAGIC) hang();
-    //multiboot_info_t *mb_info = (multiboot_info_t*) 0xC03FF000;
     serialInit();
     setupGdt();
-    setupIdt();
+    setupInterrupts();
     vbeSetup(1080, 720);
     fontStr(uitoa(magic, 16), 8, 0, 0, 0xffffffff);
     hang();

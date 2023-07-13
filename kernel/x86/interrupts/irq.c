@@ -1,8 +1,8 @@
 #include "interrupts.h"
 
-static void (*handlers[32])(struct registers *regs) = { 0 };
+void (*handlers[32])(struct registers *regs) = { 0 };
 
-static void stub(struct registers *regs) {
+void irqStub(struct registers *regs) {
     if (regs->int_no <= 47 && regs->int_no >= 32) {
         if (handlers[regs->int_no - 32]) {
             handlers[regs->int_no - 32](regs);
@@ -16,7 +16,7 @@ static void stub(struct registers *regs) {
     outb(PIC1, PIC_EOI);
 }
 
-static void remapIrqs(void) {
+void remapIrqs(void) {
     u8 mask1 = inb(PIC1_DATA), mask2 = inb(PIC2_DATA);
     outb(PIC1, ICW1_INIT | ICW1_ICW4);
     outb(PIC2, ICW1_INIT | ICW1_ICW4);
@@ -30,13 +30,13 @@ static void remapIrqs(void) {
     outb(PIC2_DATA, mask2);
 }
 
-static void setIrqMask(size_t i) {
+void setIrqMask(size_t i) {
     u16 port = i < 8 ? PIC1_DATA : PIC2_DATA;
     u8 value = inb(port) | (1 << i);
     outb(port, value);
 }
 
-static void clearIrqMask(size_t i) {
+void clearIrqMask(size_t i) {
     u16 port = i < 8 ? PIC1_DATA : PIC2_DATA;
     u8 value = inb(port) & ~(1 << i);
     outb(port, value);
@@ -47,12 +47,4 @@ void installIrq(size_t i, void (*handler)(struct registers *)) {
     handlers[i] = handler;
     clearIrqMask(i);
     __asm __volatile("sti");
-}
-
-void setupIrqs(void) {
-    remapIrqs();
-
-    for (size_t i = 0; i < 16; i++) {
-        installIsr(32 + i, stub);
-    }
 }

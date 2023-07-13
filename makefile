@@ -17,14 +17,14 @@ NASM=nasm
 
 CFLAGS=-m32 -O2 -g
 CFLAGS+=-Wall -Wextra -Wpedantic
-CFLAGS+=-nostdinc -ffreestanding -static -nostartfiles -nolibc -s
+CFLAGS+=-nostdinc -ffreestanding -static -nostartfiles -nostdlib -s
 CFLAGS+=-fno-pie -fno-stack-protector -fno-builtin-function -fno-builtin -fno-pic
-CCFLAGS=-std=c11 -Ikernel
+CCFLAGS=-std=c11 -I./kernel
 CCFLAGS+=-Wno-pointer-arith -Wno-unused-parameter
 CXXFLAGS=-fno-exceptions -fno-rtti -nostdlib++
 ASFLAGS=-O2
 NASMFLAGS=-felf32
-LDFLAGS=-Tlinker.ld -static-libgcc -fno-exceptions -fno-rtti
+LDFLAGS=-Tlinker.ld -fno-exceptions -fno-rtti
 
 ifeq ($(UNAME),Linux)
 CCFLAGS+=-elf_i386

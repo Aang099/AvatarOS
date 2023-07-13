@@ -32,8 +32,8 @@ _start:
 	movl $(bootPageTable - 0xC0000000), %edi
 	# First address to map is address 0.
 	movl $0, %esi
-	# Map 1023 pages. The 1024th page will be mapped to the location of the multiboot structure
-	movl $1023, %ecx
+	# Map 1024 pages
+	movl $1024, %ecx
 
 1:
 	# Only map the kernel.
@@ -57,11 +57,6 @@ _start:
 	loop 1b
 
 3:
-	# Map multiboot structure to 0xC03FF000 as "present, writable".
-	andl $0xfffff000, %ebx
-	addl $3, %ebx
-	movl %ebx, bootPageTable - 0xC0000000 + 4092
-
 	# The page table is used at both page directory entry 0 (virtually from 0x0
 	# to 0x3FFFFF) (thus identity mapping the kernel) and page directory entry
 	# 768 (virtually from 0xC0000000 to 0xC03FFFFF) (thus mapping it in the
@@ -103,9 +98,10 @@ _start:
 
 	# Enter the high-level kernel.
 	push %eax
-	call c_init
+	push %ebx
+	call main
 
-	# Theoretically, c_init should never return. If it somehow does, loop infinitely.
+	# Theoretically, cinit should never return. If it somehow does, loop infinitely.
 	cli
 1:	hlt
 	jmp 1b

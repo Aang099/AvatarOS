@@ -14,6 +14,8 @@
 #define ICW1_ICW4 0x01
 #define ICW1_INIT 0x10
 
+#define NUM_ISRS 48
+
 #define PIC_WAIT() do {         \
         asm ("jmp 1f\n\t"       \
                 "1:\n\t"        \
@@ -41,9 +43,11 @@ struct registers {
     u32 eip, cs, eflags, useresp, ss;
 } __attribute((packed));
 
-void setupIdt(void);
+void setupInterrupts(void);
 void setupIsrs(void);
-void setupIrqs(void);
+void remapIrqs(void);
 void idtSet(u8 index, void (*base)(struct registers *), u16 selector, u8 flags);
-void installIsr(size_t i, void (*handler)(struct registers*));
 void installIrq(size_t i, void (*handler)(struct registers *));
+void irqStub(struct registers *regs);
+
+extern void (*isrHandlers[])(struct registers*);

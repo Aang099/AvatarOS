@@ -223,6 +223,8 @@ struct multiboot_color
     u8 blue;
 };
 
+typedef struct multiboot_info multiboot_info_t;
+
 struct multiboot_mmap_entry
 {
     u32 size;

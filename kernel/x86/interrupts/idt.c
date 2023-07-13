@@ -15,9 +15,11 @@ void idtSet(u8 index, void (*base)(struct registers*), u16 selector, u8 flags) {
     };
 }
 
-void setupIdt(void) {
+void setupInterrupts(void) {
     idt.pointer.limit = sizeof(idt.entries) - 1;
     idt.pointer.base = (u32*) &idt.entries[0];
     memset(&idt.entries[0], 0, sizeof(idt.entries));
     loadIdt((u32*) &idt.pointer);
+    setupIsrs();
+    remapIrqs();
 }

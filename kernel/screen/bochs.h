@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../util/kstd.h"
-#include "../io/pci.h"
-#include "../x86/page.h"
+#include "drivers/pci/pci.h"
+#include "memory/page.h"
 
 #define BOCHS_VBE_VENDOR  0x1234
 #define BOCHS_VBE_DEVICE  0x1111

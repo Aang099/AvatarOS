@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../util/ktype.h"
-#include "../io/serial.h"
+#include "../drivers/serial/serial.h"
 
 #define PAGE_DIRECTORY_FLAG_PRESENT  (1 << 0)
 #define PAGE_DIRECTORY_FLAG_WRITABLE (1 << 1)

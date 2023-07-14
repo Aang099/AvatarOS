@@ -1,6 +1,6 @@
 #include "syscall.h"
 #include "../../screen/font.h"
-#include "../../io/serial.h"
+#include "../../drivers/serial/serial.h"
 
 void handleSyscallC(struct registers *reg) {
     serialPrintf("%x\n", reg->eax);

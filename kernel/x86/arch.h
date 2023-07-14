@@ -1,5 +1,5 @@
 #pragma once
-#include "page.h"
+#include "../memory/page.h"
 
 struct gdt_entry {
     u32 low;

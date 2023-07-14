@@ -1,5 +1,7 @@
 all: clean build
 
+ISO=avataros.iso
+
 clean:
 	rm -f isodir/boot/kernel
 	make -C kernel clean
@@ -7,7 +9,11 @@ clean:
 
 build:
 	make -C kernel build
-	grub-mkrescue isodir -o mykernel.iso
+	grub-mkrescue isodir -o avataros.iso
 
-run: all
+qemu: all
+	qemu-system-i386 avataros.iso
+
+bochs: all
 	bochs -q
+

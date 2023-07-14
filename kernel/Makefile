@@ -19,7 +19,7 @@ CFLAGS=-m32 -O2 -g
 CFLAGS+=-Wall -Wextra -Wpedantic
 CFLAGS+=-nostdinc -ffreestanding -static -nostartfiles -nostdlib -s
 CFLAGS+=-fno-pie -fno-stack-protector -fno-builtin-function -fno-builtin -fno-pic
-CCFLAGS=-std=c11 -I./kernel
+CCFLAGS=-std=c11 -I.
 CCFLAGS+=-Wno-pointer-arith -Wno-unused-parameter
 CXXFLAGS=-fno-exceptions -fno-rtti -nostdlib++
 ASFLAGS=-O2
